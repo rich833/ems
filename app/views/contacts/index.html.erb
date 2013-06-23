@@ -1,0 +1,74 @@
+<h2>Import contacts</h2>
+
+<%= form_tag contacts_path, :method => :get do %>
+  <p>
+    <%= text_field_tag :postcode, params[:postcode] %>
+    <%= text_field_tag :distance, params[:distance] %>
+    <%= submit_tag "Search Near", :name => nil %>
+  </p>
+<% end %>
+
+<%= link_to "View All", { :controller => "contacts", :action => "index", :all => "true"} %>
+
+<%= form_tag import_contacts_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+<h1>Listing contacts</h1>
+
+<%= link_to "Download CSV", { :controller => "contacts", :action => "index", :format => "csv", :postcode => params[:postcode], :distance => params[:distance] } %>
+
+<table>
+  <tr>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Email</th>
+    <th>Business</th>
+    <th>Number</th>
+    <th>Street</th>
+    <th>City</th>
+    <th>County</th>
+    <th>Postcode</th>
+    <th>Mobile</th>
+    <th>Landline</th>
+    <th>Fax</th>
+    <th>Job description</th>
+    <th>Sector</th>
+    <th>Website</th>
+    <th>Lat</th>
+    <th>Long</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+<%= @contacts.size %>
+<% @contacts.each do |contact| %>
+  <tr>
+    <td><%= contact.first_name %></td>
+    <td><%= contact.last_name %></td>
+    <td><%= contact.email %></td>
+    <td><%= contact.business %></td>
+    <td><%= contact.number %></td>
+    <td><%= contact.street %></td>
+    <td><%= contact.city %></td>
+    <td><%= contact.county %></td>
+    <td><%= contact.postcode %></td>
+    <td><%= contact.mobile %></td>
+    <td><%= contact.landline %></td>
+    <td><%= contact.fax %></td>
+    <td><%= contact.job_description %></td>
+    <td><%= contact.sector %></td>
+    <td><%= contact.website %></td>
+    <td><%= contact.latitude %></td>
+    <td><%= contact.longitude %></td>
+    <td><%= link_to 'Show', contact %></td>
+    <td><%= link_to 'Edit', edit_contact_path(contact) %></td>
+    <td><%= link_to 'Destroy', contact, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Contact', new_contact_path %>
